@@ -3,11 +3,17 @@
 
 const {validationResult} = require('express-validator')
 const ArtikelPost = require('../models/artikel')
+const cloudinary = require('cloudinary').v2
+cloudinary.config({
+    cloud_name:'azriakmalk',
+    api_key:'215983214779817',
+    api_secret:'a6Gmf-oYHe0yh_yoLakYhu9cCWM'
+})
 // const path = require('path')
 // const fs = require('fs')/
 
 
-exports.createArtikel = (req,res,next)=>{  
+exports.createArtikel = async (req,res,next)=>{  
     const errors = validationResult(req)
 
     
@@ -18,32 +24,37 @@ exports.createArtikel = (req,res,next)=>{
         throw err;
     }
 
-    // if(!req.file){
-    //     const err = new Error('Image harus di Upload')
-    //     err.errorStatus = 422;
-    //     throw err;
-    // }
+    if(!req.file){
+        const err = new Error('Image harus di Upload')
+        err.errorStatus = 422;
+        throw err;
+    }
+    try{
+        const ress = await cloudinary.uploader.upload(req.file.path)
+        
+        const image = ress.url
+        const {title,body,author} = req.body
     
-    const {title,body,author,image} = req.body
-    // const image = req.file.path
-
-    const Post = new ArtikelPost({
-        title:title,
-        body:body,
-        image:image,
-        author:author
-    })
-
-    Post.save()
-    .then(result=>{
-        res.status(201).json({
-            message:"Post Suksess",
-            data:result,
+        const Post = new ArtikelPost({
+            title:title,
+            body:body,
+            image:image,
+            author:author
         })
-    })
-    .catch(err =>{
-        console.log('err: ',err)
-    });
+
+        Post.save()
+        .then(result=>{
+            res.status(201).json({
+                message:"Post Suksess",
+                data:result,
+            })
+        })
+        .catch(err =>{
+            console.log('err: ',err)
+        });
+    }catch(err){
+        console.log('Err : ',err)
+    }
 
 }
 
@@ -103,14 +114,14 @@ exports.putArtikel = (req,res,next)=>{
         throw err;
     }
 
-    // if(!req.file){
-    //     const err = new Error('Image harus di Upload')
-    //     err.errorStatus = 422;
-    //     throw err;
-    // }
+    if(!req.file){
+        const err = new Error('Image harus di Upload')
+        err.errorStatus = 422;
+        throw err;
+    }
 
-    const {title,body,image} = req.body
-    // const image = req.file.path
+    const {title,body} = req.body
+    const image = req.file.path
     const id = req.params.id;
 
     ArtikelPost.findById(id)
