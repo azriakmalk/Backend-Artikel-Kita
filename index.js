@@ -6,7 +6,7 @@ const mongoose = require('mongoose')
 const app = express();
 const artikelRoutes = require('./src/routes/artikel');
 const userRoutes = require('./src/routes/user')
-// const cors = require('cors');
+const cors = require('cors');
 
 // const fileStorage = multer.diskStorage({
 //     destination: (req,file,cb)=>{
@@ -31,7 +31,7 @@ app.use(bodyParser.json())
 // app.use('/images',express.static(path.join(__dirname,'images')))
 // app.use(multer({storage:fileStorage, fileFilter:fileFilter}).single('image'))
 
-// app.use(cors())
+app.use(cors())
 app.use((req,res,next)=>{
     res.setHeader("Access-Control-Allow-Origin",'*')
     res.setHeader("Access-Control-Allow-Methods","GET, POST, PUT, DELET")
