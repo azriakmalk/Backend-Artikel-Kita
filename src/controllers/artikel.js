@@ -3,8 +3,8 @@
 
 const {validationResult} = require('express-validator')
 const ArtikelPost = require('../models/artikel')
-const path = require('path')
-const fs = require('fs')
+// const path = require('path')
+// const fs = require('fs')
 
 
 exports.createArtikel = (req,res,next)=>{  
