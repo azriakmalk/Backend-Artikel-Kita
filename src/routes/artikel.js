@@ -11,7 +11,6 @@ router.get('/artikel',artikelController.getAllArtikel)
 router.get('/artikelku',artikelController.getArtikelById)
 
 router.post('/artikel',[
-    auth,
     body('title').isLength({min: 5}).withMessage('Input title tidak sesuai'),
     body('body').isLength({min:5}).withMessage('Input body tidak sesuai'),],
     artikelController.createArtikel)

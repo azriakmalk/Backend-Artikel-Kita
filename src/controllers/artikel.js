@@ -13,7 +13,7 @@ cloudinary.config({
 // const fs = require('fs')/
 
 
-exports.createArtikel = async (req,res,next)=>{  
+exports.createArtikel =  async (req,res,next)=>{  
     const errors = validationResult(req)
 
     
@@ -29,10 +29,12 @@ exports.createArtikel = async (req,res,next)=>{
         err.errorStatus = 422;
         throw err;
     }
+
+    
     try{
         const ress = await cloudinary.uploader.upload(req.file.path)
         
-        const image = ress.url
+        const image = ress.secure_url
         const {title,body,author} = req.body
     
         const Post = new ArtikelPost({
