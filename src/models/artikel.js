@@ -11,7 +11,7 @@ const ArtikelPost = new Schema({
         required: true,
     },
     image:{
-        type: String,
+        type: Object,
         required: true,
     },
     author: {

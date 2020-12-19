@@ -34,7 +34,10 @@ exports.createArtikel =  async (req,res,next)=>{
     try{
         const ress = await cloudinary.uploader.upload(req.file.path)
         
-        const image = ress.secure_url
+        const image = {
+            id:ress.public_id,
+            url:ress.secure_url
+        }
         const {title,body,author} = req.body
     
         const Post = new ArtikelPost({
