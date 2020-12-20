@@ -8,7 +8,9 @@ const artikelController = require('../controllers/artikel')
 
 router.get('/artikel',artikelController.getAllArtikel)
 
-router.get('/artikelku',artikelController.getArtikelById)
+router.get('/artikelku',artikelController.getSartikel)
+
+router.get('/artikel/:id',artikelController.getArtikelById)
 
 router.post('/artikel',[
     body('title').isLength({min: 5}).withMessage('Input title tidak sesuai'),
