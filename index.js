@@ -9,9 +9,6 @@ const userRoutes = require('./src/routes/user')
 const cors = require('cors');
 
 const fileStorage = multer.diskStorage({
-    // destination: (req,file,cb)=>{
-    //     cb(null, 'images');
-    // },
     filename:(req,file,cb)=>{
         cb(null, new Date().getTime() + '-' + file.originalname)
     }
@@ -50,13 +47,9 @@ app.use((error,req,res,next)=>{
 })
 
 //User
-
 app.use('/auth/user',userRoutes)
-
-
-
-
 //End Userrr
+
 const port = process.env.PORT || 4000
 mongoose.connect('mongodb+srv://azri:azri123@cluster0.q3hgj.mongodb.net/Artikel?retryWrites=true&w=majority')
 .then(()=>{

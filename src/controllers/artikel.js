@@ -1,6 +1,3 @@
-// console.log(req.method)
-// console.log(req.originalUrl)   
-
 const {validationResult} = require('express-validator')
 const ArtikelPost = require('../models/artikel')
 const cloudinary = require('cloudinary').v2
@@ -9,9 +6,6 @@ cloudinary.config({
     api_key:'215983214779817',
     api_secret:'a6Gmf-oYHe0yh_yoLakYhu9cCWM'
 })
-// const path = require('path')
-// const fs = require('fs')/
-
 
 exports.createArtikel =  async (req,res,next)=>{  
     const errors = validationResult(req)
@@ -137,11 +131,6 @@ exports.putArtikel = async (req,res,next)=>{
         throw err;
     }
 
-    // if(!req.file){
-    //     const err = new Error('Image harus di Upload')
-    //     err.errorStatus = 422;
-    //     throw err;
-    // }
     try{
         const {title,body,image} = req.body
         const id = req.params.id;
@@ -167,7 +156,6 @@ exports.putArtikel = async (req,res,next)=>{
                 err.errorStatus = 404;
                 throw err
             }
-            // removeImage(post.image)
             post.title=title;
             post.body = body;
             post.image = img;
@@ -196,7 +184,7 @@ exports.deleteArtikel = (req,res,next)=>{
             err.errorStatus = 404;
             throw err
         }
-        // removeImage(post.image);
+        
         cloudinary.uploader.destroy(img)
         return ArtikelPost.findByIdAndRemove(id);        
     })
@@ -209,8 +197,3 @@ exports.deleteArtikel = (req,res,next)=>{
     .catch(err=>next(err))
 }
 
-
-// const removeImage = (filePath)=>{
-//     filePath = path.join(__dirname,'../..',filePath);
-//     fs.unlink(filePath, err=> console.log(err))
-// }
