@@ -1,10 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const jwt = require('jsonwebtoken')
-const bcrypt = require('bcryptjs')
-const {check,validationResult} = require('express-validator')
-const User = require('../models/user')
-const JWT_KEY = "PRIVATE_KEY"
+const {check} = require('express-validator')
 const auth = require('../middleware/user')
 const userController = require('../controllers/user')
 
